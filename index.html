@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BizIdea | Générateur d'Idées Business par IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        },
+                        dark: '#1e293b',
+                        light: '#f8fafc'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="gradient-bg p-2 rounded-lg">
+                    <i class="fas fa-lightbulb text-white text-xl"></i>
+                </div>
+                <span class="text-xl font-bold text-dark">BizIdea</span>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="text-dark hover:text-primary-600 font-medium">Accueil</a>
+                <a href="#features" class="text-dark hover:text-primary-600 font-medium">Fonctionnalités</a>
+                <a href="#how-it-works" class="text-dark hover:text-primary-600 font-medium">Comment ça marche</a>
+                <a href="#community" class="text-dark hover:text-primary-600 font-medium">Communauté</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <div class="language-selector">
+                    <button class="flex items-center space-x-1 text-dark hover:text-primary-600">
+                        <i class="fas fa-globe"></i>
+                        <span>FR</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="language-dropdown hidden py-2 w-32">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Français</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">English</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Español</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Deutsch</a>
+                    </div>
+                </div>
+                <a href="#generate" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">Générer des idées</a>
+            </div>
+            
+            <button class="md:hidden text-dark" id="mobile-menu-toggle">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+            <div class="flex flex-col space-y-2">
+                <a href="#" class="text-dark hover:text-primary-600 font-medium py-2">Accueil</a>
+                <a href="#features" class="text-dark hover:text-primary-600 font-medium py-2">Fonctionnalités</a>
+                <a href="#how-it-works" class="text-dark hover:text-primary-600 font-medium py-2">Comment ça marche</a>
+                <a href="#community" class="text-dark hover:text-primary-600 font-medium py-2">Communauté</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">Lancez le business parfait avec l'IA</h1>
+                    <p class="text-xl mb-8">Notre plateforme analyse les tendances et les besoins réels pour vous proposer des idées de business validées, rentables et adaptées à votre marché.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#generate" class="bg-white text-primary-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-bold text-center">Essayer gratuitement</a>
+                        <a href="#how-it-works" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary-600 px-6 py-3 rounded-lg font-bold text-center">Voir comment ça marche</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <div class="absolute -top-6 -left-6 w-32 h-32 bg-secondary-400 rounded-full opacity-20 animate-pulse"></div>
+                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-primary-400 rounded-full opacity-20 animate-pulse"></div>
+                        <div class="relative bg-white rounded-xl shadow-2xl overflow-hidden">
+                            <div class="bg-gray-100 p-4 flex items-center">
+                                <div class="flex space-x-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                </div>
+                                <div class="flex-1 text-center text-sm font-medium text-gray-700">Générateur d'idées</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="mb-4">
+                                    <div class="text-sm text-gray-500 mb-1">Idée générée pour : Paris, France</div>
+                                    <h3 class="text-lg font-bold text-dark">Service de livraison express pour commerces locaux</h3>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="text-xs text-gray-500 mb-1">Potentiel</div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-500 mb-1">Concurrence</div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-yellow-500 h-2 rounded-full" style="width: 45%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-500 mb-1">Investissement initial</div>
+                                        <div class="text-sm font-medium text-dark">€5,000 - €10,000</div>
+                                    </div>
+                                </div>
+                                <button class="mt-6 w-full bg-primary-600 hover:bg-primary-700 text-white py-2 rounded-lg font-medium">Voir l'analyse complète</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-dark mb-4">Découvrez nos fonctionnalités puissantes</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Notre plateforme combine intelligence artificielle et analyse de données pour vous offrir les meilleures opportunités business.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover">
+                    <div class="gradient-bg w-14 h-14 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-brain text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Générateur d'idées validées</h3>
+                    <p class="text-gray-600">Des idées basées sur des besoins réels détectés par notre IA à travers le web.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover">
+                    <div class="gradient-bg w-14 h-14 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Analyse du potentiel</h3>
+                    <p class="text-gray-600">Volume de recherche, concurrence, faisabilité et coût estimé pour chaque idée.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover">
+                    <div class="gradient-bg w-14 h-14 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-robot text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Mentorat IA 24/7</h3>
+                    <p class="text-gray-600">Assistant intelligent pour répondre à toutes vos questions sur votre projet.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover">
+                    <div class="gradient-bg w-14 h-14 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Communauté active</h3>
+                    <p class="text-gray-600">Échangez avec d'autres entrepreneurs et obtenez des retours sur vos idées.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-dark mb-4">Comment ça marche</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">En seulement 3 étapes simples, découvrez des opportunités business adaptées à votre marché.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="flex flex-col items-center text-center">
+                    <div class="gradient-bg w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">1</div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Définissez vos critères</h3>
+                    <p class="text-gray-600">Sélectionnez votre localisation, secteur d'activité et budget pour personnaliser les résultats.</p>
+                </div>
+                
+                <div class="flex flex-col items-center text-center">
+                    <div class="gradient-bg w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">2</div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Notre IA analyse le marché</h3>
+                    <p class="text-gray-600">Notre système scanne les tendances et besoins réels pour trouver des opportunités.</p>
+                </div>
+                
+                <div class="flex flex-col items-center text-center">
+                    <div class="gradient-bg w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">3</div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Recevez vos idées validées</h3>
+                    <p class="text-gray-600">Obtenez des propositions concrètes avec analyse de potentiel et plan d'action.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Idea Generator Section -->
+    <section id="generate" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-dark mb-4">Générez vos idées business</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Personnalisez votre recherche pour obtenir des idées adaptées à votre marché.</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto">
+                <div class="p-8 border-b">
+                    <form id="ideaForm">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Localisation</label>
+                                <select id="location" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                    <option value="">Sélectionnez un pays/région</option>
+                                    <option value="france">France</option>
+                                    <option value="canada">Canada</option>
+                                    <option value="belgique">Belgique</option>
+                                    <option value="suisse">Suisse</option>
+                                    <option value="usa">États-Unis</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="city" class="block text-sm font-medium text-gray-700 mb-1">Ville (optionnel)</label>
+                                <input type="text" id="city" placeholder="Paris, Lyon, Bruxelles..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                            
+                            <div>
+                                <label for="industry" class="block text-sm font-medium text-gray-700 mb-1">Secteur d'activité</label>
+                                <select id="industry" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                    <option value="">Tous les secteurs</option>
+                                    <option value="tech">Technologie</option>
+                                    <option value="food">Alimentation</option>
+                                    <option value="health">Santé/Bien-être</option>
+                                    <option value="eco">Écologie/Durable</option>
+                                    <option value="service">Services</option>
+                                    <option value="ecommerce">E-commerce</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="budget" class="block text-sm font-medium text-gray-700 mb-1">Budget initial</label>
+                                <select id="budget" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                    <option value="">Tous les budgets</option>
+                                    <option value="low">Moins de 5 000€</option>
+                                    <option value="medium">5 000€ - 20 000€</option>
+                                    <option value="high">Plus de 20 000€</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <label for="keywords" class="block text-sm font-medium text-gray-700 mb-1">Mots-clés (optionnel)</label>
+                            <input type="text" id="keywords" placeholder="Ex: durable, local, digital..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                            <p class="text-xs text-gray-500 mt-1">Ajoutez des mots-clés pour affiner votre recherche</p>
+                        </div>
+                        
+                        <button type="submit" class="mt-8 w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-lg font-bold text-lg flex items-center justify-center">
+                            <span>Générer des idées</span>
+                            <i class="fas fa-bolt ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+                
+                <div id="resultsSection" class="hidden p-8 bg-gray-50">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-dark">Résultats pour votre recherche</h3>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-600">Trier par :</span>
+                            <select id="sortSelect" class="text-sm border-0 bg-transparent font-medium text-primary-600 focus:ring-0">
+                                <option value="potential">Potentiel</option>
+                                <option value="newest">Nouveauté</option>
+                                <option value="investment">Investissement</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="loadingIdeas" class="flex flex-col items-center justify-center py-12">
+                        <div class="loading-dots mb-4">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <p class="text-gray-600">Notre IA analyse les tendances et génère des idées pour vous...</p>
+                    </div>
+                    
+                    <div id="ideasContainer" class="grid gap-6 hidden">
+                        <!-- Ideas will be populated here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Mentor Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h2 class="text-3xl font-bold text-dark mb-6">Mentor IA disponible 24/7</h2>
+                    <p class="text-lg text-gray-600 mb-8">Notre assistant intelligent est là pour répondre à toutes vos questions sur votre idée de business, le marché, la concurrence et plus encore.</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Analyse approfondie de votre idée</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Conseils personnalisés</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Comparaison avec la concurrence</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Plan d'action étape par étape</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden max-w-md mx-auto">
+                        <div class="bg-gray-100 p-4 flex items-center">
+                            <div class="flex-1 text-center text-sm font-medium text-gray-700">Mentor IA</div>
+                        </div>
+                        <div class="p-6 h-96 overflow-y-auto" id="chatContainer">
+                            <div class="space-y-4">
+                                <div class="flex justify-start">
+                                    <div class="chat-bubble ai-bubble p-4">
+                                        <p>Bonjour ! Je suis votre mentor IA. Posez-moi toutes vos questions sur votre idée de business et je vous aiderai à la développer.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 border-t">
+                            <div class="flex items-center">
+                                <input type="text" id="chatInput" placeholder="Posez votre question..." class="flex-1 px-4 py-2 rounded-l-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                <button id="chatSend" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-r-lg">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-dark mb-4">Rejoignez notre communauté</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Échangez avec d'autres entrepreneurs, partagez vos idées et obtenez des retours constructifs.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-md border border-gray-100 card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-primary-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-dark">Jean D.</h4>
+                            <p class="text-sm text-gray-500">Entrepreneur en e-commerce</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Grâce à BizIdea, j'ai lancé une boutique en ligne de produits durables qui génère déjà 5 000€/mois après seulement 3 mois."</p>
+                    <div class="flex space-x-2">
+                        <span class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded-full">Succès</span>
+                        <span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full">E-commerce</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md border border-gray-100 card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-secondary-100 flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-secondary-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-dark">Sophie L.</h4>
+                            <p class="text-sm text-gray-500">Créatrice de service</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"La communauté m'a aidé à affiner mon idée de service de nettoyage écologique. Les retours ont été précieux pour mon business plan."</p>
+                    <div class="flex space-x-2">
+                        <span class="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded-full">Service</span>
+                        <span class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded-full">Écologie</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md border border-gray-100 card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-yellow-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-dark">Thomas M.</h4>
+                            <p class="text-sm text-gray-500">Startup Tech</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Le mentor IA m'a guidé sur les aspects techniques et légaux de mon application. Un gain de temps énorme !"</p>
+                    <div class="flex space-x-2">
+                        <span class="text-xs px-2 py-1 bg-indigo-100 text-indigo-800 rounded-full">Tech</span>
+                        <span class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded-full">Startup</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <a href="#" class="inline-block bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg font-bold text-lg">Rejoindre la communauté</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-dark mb-4">Nos offres</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Choisissez le plan qui correspond à vos besoins entrepreneuriaux.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white p-8 rounded-xl shadow-md border border-gray-100">
+                    <h3 class="text-xl font-bold text-dark mb-2">Starter</h3>
+                    <p class="text-gray-600 mb-6">Parfait pour découvrir et explorer des idées</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold text-dark">Gratuit</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">5 idées générées par mois</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Analyse basique du potentiel</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Accès limité au mentor IA</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Accès à la communauté</span>
+                        </li>
+                    </ul>
+                    <button class="w-full border-2 border-primary-600 text-primary-600 hover:bg-primary-50 py-2 rounded-lg font-medium">Commencer gratuitement</button>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg border-2 border-primary-600 relative">
+                    <div class="absolute top-0 right-0 bg-primary-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAIRE</div>
+                    <h3 class="text-xl font-bold text-dark mb-2">Pro</h3>
+                    <p class="text-gray-600 mb-6">Idéal pour les entrepreneurs sérieux</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold text-dark">29€</span>
+                        <span class="text-gray-600">/mois</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">50 idées générées par mois</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Analyse détaillée du potentiel</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Accès illimité au mentor IA</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Accès premium à la communauté</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Comparaison avec la concurrence</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-primary-600 hover:bg-primary-700 text-white py-2 rounded-lg font-medium">Choisir ce plan</button>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md border border-gray-100">
+                    <h3 class="text-xl font-bold text-dark mb-2">Business</h3>
+                    <p class="text-gray-600 mb-6">Pour les agences et consultants</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold text-dark">99€</span>
+                        <span class="text-gray-600">/mois</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Idées illimitées</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Analyses approfondies</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Mentor IA prioritaire</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Accès VIP à la communauté</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Rapports personnalisés</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Support dédié</span>
+                        </li>
+                    </ul>
+                    <button class="w-full border-2 border-primary-600 text-primary-600 hover:bg-primary-50 py-2 rounded-lg font-medium">Choisir ce plan</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-dark mb-4">Questions fréquentes</h2>
+                <p class="text-lg text-gray-600">Trouvez les réponses aux questions les plus courantes sur notre plateforme.</p>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50">
+                        <span class="text-lg font-medium text-dark text-left">Comment BizIdea trouve-t-il des idées de business ?</span>
+                        <i class="fas fa-chevron-down text-primary-600 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-600">Notre IA analyse en temps réel des milliers de sources en ligne (réseaux sociaux, forums, moteurs de recherche) pour identifier des problèmes récurrents, des besoins non satisfaits et des tendances émergentes. Nous combinons ces données avec des analyses de marché pour vous proposer des idées validées.</p>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50">
+                        <span class="text-lg font-medium text-dark text-left">Puis-je cibler une région spécifique pour mes idées ?</span>
+                        <i class="fas fa-chevron-down text-primary-600 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-600">Absolument ! Vous pouvez spécifier un pays, une région ou même une ville pour que nos analyses prennent en compte les particularités locales (concurrence, habitudes de consommation, réglementations). Nous couvrons actuellement plus de 50 pays avec des données précises.</p>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50">
+                        <span class="text-lg font-medium text-dark text-left">Comment est calculé le "potentiel" d'une idée ?</span>
+                        <i class="fas fa-chevron-down text-primary-600 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-600">Notre algorithme évalue plusieurs facteurs : volume de recherche, croissance de la demande, niveau de concurrence, barrières à l'entrée, tendances à long terme et potentiel de revenus. Chaque idée reçoit un score sur 100 basé sur ces critères, avec une analyse détaillée disponible pour les abonnés Pro et Business.</p>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50">
+                        <span class="text-lg font-medium text-dark text-left">Puis-je tester la plateforme gratuitement ?</span>
+                        <i class="fas fa-chevron-down text-primary-600 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-600">Oui, notre plan Starter est entièrement gratuit et vous permet de générer jusqu'à 5 idées par mois avec des analyses basiques. C'est une excellente façon de découvrir la puissance de notre plateforme avant de passer à un abonnement payant pour des fonctionnalités plus avancées.</p>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 hover:bg-gray-50">
+                        <span class="text-lg font-medium text-dark text-left">Comment fonctionne le mentor IA ?</span>
+                        <i class="fas fa-chevron-down text-primary-600 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-600">Notre mentor IA est un assistant conversationnel avancé formé sur des milliers de business plans et études de marché. Il peut répondre à vos questions spécifiques, vous aider à affiner votre idée, suggérer des stratégies de lancement et même vous fournir des modèles financiers. Plus vous interagissez avec lui, plus ses conseils deviennent personnalisés.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="gradient-bg text-white py-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-6">Prêt à découvrir votre prochaine idée de business ?</h2>
+            <p class="text-xl mb-8">Inscrivez-vous gratuitement et laissez notre IA vous guider vers des opportunités rentables.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="#generate" class="bg-white text-primary-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-bold text-lg">Essayer maintenant</a>
+                <a href="#" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary-600 px-8 py-3 rounded-lg font-bold text-lg">Voir les tarifs</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="gradient-bg p-2 rounded-lg">
+                            <i class="fas fa-lightbulb text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold">BizIdea</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Votre générateur d'idées business intelligent.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Produit</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Fonctionnalités</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Tarifs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">API</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Intégrations</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Ressources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Guides</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Centre d'aide</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Entreprise</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">À propos</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Carrières</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Presse</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2023 BizIdea. Tous droits réservés.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">Conditions d'utilisation</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Politique de confidentialité</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
