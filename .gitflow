@@ -1,0 +1,16 @@
+# GitFlow Configuration for Bizidea by HumanOS
+
+[gitflow "branch"]
+    master = main
+    develop = dev
+
+[gitflow "prefix"]
+    feature = feat/
+    bugfix = fix/
+    release = release/
+    hotfix = hotfix/
+    support = support/
+    versiontag = v
+
+[gitflow "path"]
+    hooks = .git/hooks
