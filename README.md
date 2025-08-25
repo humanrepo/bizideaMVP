@@ -33,11 +33,12 @@ Bizidea by HumanOS est une plateforme SaaS complète qui aide les entrepreneurs,
 
 ## 🚀 Roadmap Agile
 
-### Sprint 1 ✅ - Initialisation
-- [x] Structure du repository Git
-- [x] Configuration GitFlow
-- [x] Setup GitHub Actions CI/CD
-- [x] Documentation initiale
+### Sprint 1 🚧 - Initialisation (en cours)
+- [x] Structure du repository Git (/frontend, /backend, /docs, /infra)
+- [x] Configuration GitFlow (branches main, dev)
+- [x] Setup GitHub Actions CI/CD (tests backend & frontend)
+- [x] Documentation initiale (README.md)
+- [ ] Protection des branches (en attente des premiers tests CI)
 
 ### Sprint 2 ✅ - Frontend de base
 - [x] Setup React + TypeScript + Tailwind
